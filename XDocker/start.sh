@@ -35,11 +35,16 @@ ls -la config
 #git clone https://github.com/sseshachala/Configurations.git
 #cd Configurations/xdocker/config
 
-cd /home/xdocker
+cd /home/xdocker/public_html
 git clone https://github.com/XDocker/app.git
+mv app Xdocker
 rm -rf /home/xdocker/app/app/config
-cp -r /root/config /home/xdocker/app/app
+cp -r /root/config /home/xdocker/public_html/Xdocker/app
+mkdir /home/xdocker/public_html/Xdocker/app/storage/logs
+mkdir /home/xdocker/public_html/Xdocker/app/storage/meta
+mkdir /home/xdocker/public_html/Xdocker/app/storage/sessions
 chown -R xdocker:xdocker /home/xdocker
+chmod -R 777 /home/xdocker/public_html/Xdocker/app/storage/*
 for env_file in $( ls /root/config/*/database.php )
 do
 	DB=$( /root/db_strip.sh mysql database $env_file )
@@ -55,3 +60,8 @@ echo "GRANT ALL ON *.* TO admin@'%' IDENTIFIED BY '$MYSQL_PASSWORD' WITH GRANT O
 echo -e "[client]\n password=$MYSQL_PASSWORD">/root/.my.cnf
 cat /root/.my.cnf
 
+cd /home/xdocker/public_html/Xdocker/
+php artisan migrate --force
+php artisan db:seed --force
+/etc/init.d/apache2 restart
+bash
