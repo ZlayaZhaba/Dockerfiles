@@ -1,7 +1,7 @@
 # dockerizing netflix-ice OSS project
 
-#FROM ubuntu:14.04
-FROM xdocker/netflix_ice:latest
+FROM ubuntu:14.04
+#FROM xdocker/netflix_ice:latest
 MAINTAINER Xervmon
 EXPOSE 443
 EXPOSE 8080
@@ -11,7 +11,7 @@ RUN mv /bin/sh /bin/sh.bak && ln -s /bin/bash /bin/sh
 RUN apt-get update && apt-get install -y software-properties-common python-software-properties curl nginx libcurl3 php5-curl git unzip
 WORKDIR /home
 RUN pwd
-#RUN git clone https://github.com/Netflix/ice.git && cd ice && ls -al
+RUN git clone https://github.com/Netflix/ice.git && cd ice && ls -al
 
 # Install Java
 RUN echo 'Going to install Oracle java.. .   .'
@@ -26,19 +26,17 @@ RUN java -version
 
 # Install grails
 RUN echo 'installing grails.. .   .'
-#RUN curl -s get.gvmtool.net | bash
-#RUN source /root/.gvm/bin/gvm-init.sh && gvm install grails 2.2.1 -y && grails -version
-#RUN gvm install grails 2.2.1 -y
+RUN curl -s get.gvmtool.net | bash && source "//.gvm/bin/gvm-init.sh" && gvm install grails 2.2.1 -y && grails -version && gvm install grails 2.2.1 -y
 #RUN grails -version
 WORKDIR /home/ice
  
 # (Bug: Ice can't deal with this file existing and being empty.)
 RUN rm grails-app/i18n/messages.properties
 # Create our local work directories (both for processing and reading)
-#RUN mkdir /var/cache/ice_processor
-#RUN mkdir /var/cache/ice_reader
+RUN mkdir /var/cache/ice_processor
+RUN mkdir /var/cache/ice_reader
 # Set up the config file
-#RUN cp src/java/sample.properties src/java/ice.properties
+RUN cp src/java/sample.properties src/java/ice.properties
 
 ADD netflix-ice.conf /etc/nginx/sites-available/
 ADD netflix-ice.sh /home/ice/

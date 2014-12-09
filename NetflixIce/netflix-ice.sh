@@ -25,7 +25,6 @@ sed -i "s/ice.billing_s3bucketname=billing_s3bucketname1,billing_s3bucketname2/i
 sed -i "s/ice.work_s3bucketname=work_s3bucketname/ice.work_s3bucketname=$BILLING_BUCKET/g" /home/ice/src/java/ice.properties
 sed -i "s/mnt/var\/cache/g" /home/ice/src/java/ice.properties
 sed -i "s/http:\/\/code.highcharts/https:\/\/code.highcharts/g" /home/ice/src/java/ice.properties
-#sed -i "s/localhost:8080/$host:443/g" /home/ice/grails-app/conf/Config.groovy
 sed -i "s/localhost/$host/g" /home/ice/grails-app/conf/Config.groovy
 
 echo "Adding credentials for Nginx..."
