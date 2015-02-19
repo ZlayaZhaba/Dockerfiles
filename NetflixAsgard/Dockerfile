@@ -12,7 +12,7 @@ RUN apt-get update -y && apt-get install -y nginx
 #ADD https://netflixoss.ci.cloudbees.com/job/asgard-master/lastSuccessfulBuild/artifact/asgard-standalone.jar /opt/asgard/asgard-standalone.jar
 
 # stable build :-
-ADD https://netflixoss.ci.cloudbees.com/job/asgard-master/lastStableBuild/artifact/asgard-standalone.jar /opt/asgard/asgard-standalone.jar
+ADD https://github.com/Netflix/asgard/releases/download/1.5.1/asgard-standalone.jar /opt/asgard/asgard-standalone.jar
 
 # script for starting with AWS creds from environment variables
 ADD start /opt/asgard/start
